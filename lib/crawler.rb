@@ -32,24 +32,7 @@ class Crawler
     EM.synchrony do
       # Iterate over a copy while we change the main array
       urls = @urls_to_crawl.dup
-      @urls_to_crawl.clear
-
-      EM::Synchrony::FiberIterator.new(urls, CONCURRENCY).each do |url|
-        next if @map.key?(url)
-
-        http = http_request(url)
-
-        next if http.nil?
-
-        page = Nokogiri::HTML(http.response)
-        neighbors = get_neighbors(page, url)
-        @urls_to_crawl += neighbors
-
-        statics = get_statics(page)
-
-        @map[url] = Node.new(neighbors, statics)
-      end
-
+      @urls_to_crawl = crawl_urls(urls)
       crawl
     end
   end
@@ -59,6 +42,28 @@ class Crawler
   end
 
   protected
+
+  def crawl_urls(urls)
+    next_urls = []
+
+    EM::Synchrony::FiberIterator.new(urls, CONCURRENCY).each do |url|
+      next if @map.key?(url)
+
+      http = http_request(url)
+
+      next if http.nil?
+
+      page = Nokogiri::HTML(http.response)
+      neighbors = get_neighbors(page, url)
+      next_urls += neighbors
+
+      statics = get_statics(page)
+
+      @map[url] = Node.new(neighbors, statics)
+    end
+
+    next_urls
+  end
 
   def http_request(url)
     http = EventMachine::HttpRequest.new(url)
