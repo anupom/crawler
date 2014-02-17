@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'crawler'
+
+if ARGV.empty?
+  p 'Please provide a url to crawl'
+  exit 1
+end
+
+crawler = Crawler.new(ARGV[0])
+crawler.crawl
+p crawler.map
