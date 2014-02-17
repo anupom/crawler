@@ -3,7 +3,7 @@
 require 'crawler'
 
 if ARGV.empty?
-  p 'Please provide a url to crawl'
+  puts 'Please provide a url to crawl'
   exit 1
 end
 
