@@ -181,9 +181,9 @@ class CrawlerTest < Test::Unit::TestCase
     url1 = 'http://www.example.com'
 
     stub_request(:get, url1).to_return(
-        body: '<link rel="stylesheet" href="test.css" />'\
-          '<script src="test.js"></script>'\
-          '<img src="test.png" />'
+      body: '<link rel="stylesheet" href="test.css" />'\
+        '<script src="test.js"></script>'\
+        '<img src="test.png" />'
     )
 
     crawler = Crawler.new(url1)
@@ -215,7 +215,7 @@ class CrawlerTest < Test::Unit::TestCase
 
   def stub_response_link(url, link)
     stub_request(:get, url).to_return(
-        body: %(<body><a href="#{link}">test</a></body>")
+      body: %(<body><a href="#{link}">test</a></body>")
     )
   end
 
@@ -227,13 +227,13 @@ class CrawlerTest < Test::Unit::TestCase
 
   def stub_response_empty(url)
     stub_request(:get, url).to_return(
-        body: '<body>stub body</body>'
+      body: '<body>stub body</body>'
     )
   end
 
   def stub_response_not_found(url)
     stub_request(:get, url).to_return(
-        status: 404
+      status: 404
     )
   end
 

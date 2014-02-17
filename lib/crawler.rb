@@ -38,7 +38,7 @@ class Crawler
   end
 
   def print
-    ap @map
+    ap @map, { index: false }
   end
 
   protected
@@ -75,7 +75,7 @@ class Crawler
     end
     http
   rescue Addressable::URI::InvalidURIError
-      nil
+    nil
   end
 
   def queue_for_retry(url)
@@ -113,17 +113,17 @@ class Crawler
 
     scripts = page.css('script')
     scripts.each do |script|
-      statics.add(script['src'])
+      statics.add(script['src']) unless script['src'].nil?
     end
 
     stylesheets = page.css('link[rel="stylesheet"]')
     stylesheets.each do |stylesheet|
-      statics.add(stylesheet['href'])
+      statics.add(stylesheet['href']) unless stylesheet['href'].nil?
     end
 
     images = page.css('img')
     images.each do |image|
-      statics.add(image['src'])
+      statics.add(image['src']) unless image['src'].nil?
     end
 
     statics.to_a
