@@ -11,7 +11,7 @@ pretty-print the map once a URL is crawled.
 
 Add this line to your application's Gemfile:
 
-    gem 'crawler'
+    gem 'simple_crawler'
 
 And then execute:
 
@@ -19,7 +19,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install crawler
+    $ gem install simple_crawler
 
 ## Usage
 
